@@ -79,3 +79,16 @@ class Disease:
         disease = cls(name, symptoms)
         disease.save()
         return disease
+    
+
+    def update(self):
+        '''Update an existing Disease record in the database.'''
+        from lib.cli import CONN, CURSOR 
+        symptoms_str = ', '.join(self.symptoms)
+        sql = '''
+            UPDATE diseases
+            SET name = ?, symptoms = ?
+            WHERE id = ?
+        '''
+        CURSOR.execute(sql, (self.name, symptoms_str, self.id))
+        CONN.commit()
