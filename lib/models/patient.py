@@ -24,4 +24,17 @@ class Patient:
             self._name = name
         else:
             raise ValueError('Name must be a non-empty string.')
+        
+        # Property for last name with validation
+    @property
+    def last_name(self):
+        return self._last_name
+
+    @last_name.setter
+    def last_name(self, last_name):
+        if isinstance(last_name, str) and len(last_name):
+            self._last_name = last_name
+        else:
+            raise ValueError('Lastname must be a non-empty string.')
+
 
