@@ -13,6 +13,7 @@ class Patient:
         def __repr__(self):
             return f'<Patient {self.id}: {self.name}, {self.last_name}, {self.age}>'
         
+
         # Property for name with validation
     @property
     def name(self):
@@ -49,19 +50,20 @@ class Patient:
         else:
             raise ValueError('Age must be an integer between 18 and 100 inclusive.')
         
-    @classmethod
-    def create_table(cls):
-        from lib.cli import CURSOR, CONN 
-        sql = '''
-          CREATE TABLE IF NOT EXISTS patients(
-            id INTEGER PRIMARY KEY,
-            name TEXT,
-            last_name TEXT,
-            age INTEGER
-            )
-        '''
-        CURSOR.execute(sql)
-        CONN.commit()
+        
+    # @classmethod
+    # def create_table(cls):
+    #     from lib.cli import CURSOR, CONN 
+    #     sql = '''
+    #       CREATE TABLE IF NOT EXISTS patients(
+    #         id INTEGER PRIMARY KEY,
+    #         name TEXT,
+    #         last_name TEXT,
+    #         age INTEGER
+    #         )
+    #     '''
+    #     CURSOR.execute(sql)
+    #     CONN.commit()
 
 
 
