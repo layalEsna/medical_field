@@ -38,3 +38,82 @@ def list_symptoms():
             print(symptom)
     else:
         print('No symptoms found.')
+
+
+def add_new_patient():
+    try:
+        name = input("Enter the patient's name: ")
+        last_name = input("Enter the patient's last name: ")
+        
+        age_input = input(f"Enter the patient's age: ")
+        age = int(age_input)  # Ensure this is being converted to an integer properly
+        
+        new_patient = Patient.create(name, last_name, age)
+        
+        print(f'Success: {new_patient} has been added.')
+    except Exception as e:
+        print(f'Error: {e}')
+
+                
+def update_patient_by_id():
+    id_ = input("Enter patient's ID: ")
+    if id_:
+        patient = Patient.find_by_id(id_)
+        if patient:
+            name = input("Enter patient's name: ")
+            last_name = input("Enter patient's last name: ")
+            age = input("Enter patient's age: ")
+            try:
+                patient.name = name
+                patient.last_name = last_name
+                patient.age = int(age)
+                patient.update()
+                print(f'Success: {patient.name} {patient.last_name} with ID: {patient.id}, Age: {patient.age}')
+            except Exception as e:
+                print(f'Error: {e}')
+        else:
+            print('Patient not found.')
+    else:
+        print('No ID provided.')
+
+
+def update_patient_by_last_name():
+    last_name = input("Enter patient's last name: ")
+    patient = Patient.find_by_last_name(last_name)
+    if patient:
+        name = input("Update patient's name: ")
+        last_name = input("Update patient's last name: ")
+        age = input("Update patient's age: ")
+        try:
+            patient.name = name
+            patient.last_name = last_name
+            patient.age = int(age)
+            patient.update()
+            print(f'Success: {patient.name} {patient.last_name} with ID: {patient.id}, Age: {patient.age} updated.')
+        except Exception as e:
+            print(f'Error: {e}')
+    else:
+        print('No last name provided.')
+
+
+def delete_patient_by_id():
+    id_ = input("Enter patient's ID: ")
+    if id_:
+        patient = Patient.find_by_id(id_)
+        if patient:
+            confirm = input(f'Are you sure you want to delete patient {patient.name} {patient.last_name} with ID {patient.id}? (yes/no): ')
+            if confirm.lower() == 'yes':
+               
+                try:
+                    patient.delete()
+                    print(f'Success: Patient with ID {id_} has been deleted.')
+                except Exception as e:
+                    print(f'Error: {e}')
+            else:
+                print('Deletion canceled.')
+        else:
+            print(f'Patient with ID {id_} not found.')
+    else:
+        print('No ID provided.')
+
+
