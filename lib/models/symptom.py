@@ -103,3 +103,44 @@ class Symptom:
 
         del type(self).all[self.id]
         self.id = None
+
+    @classmethod 
+    def instance_from_db(cls, row):
+        '''Return a Symptom instance based on a database row.'''
+        symptom = cls.all.get(row[0])
+        if symptom:
+            symptom.description = row[1]
+            symptom.patient_id = row[2]
+            symptom.disease_id = row[3]
+        else:
+            symptom = cls(row[1], row[2], row[3])
+            symptom.id = row[0]
+            cls.all[symptom.id] = symptom
+        return symptom
+
+    @classmethod
+    def get_all(cls):
+        from lib.cli import CURSOR, CONN 
+        '''Return a list of all Symptom instances from the database.'''
+        symptoms = []
+        sql = '''
+            SELECT *
+            FROM symptoms
+        '''
+        rows = CURSOR.execute(sql).fetchall()
+        for row in rows:
+            symptom = cls.instance_from_db(row)
+            symptoms.append(symptom)
+        return symptoms
+    
+    @classmethod
+    def find_by_id(cls, id):
+        from lib.cli import CURSOR, CONN 
+        '''Find and return a Symptom instance by ID from the symptoms table.'''
+        sql = '''
+            SELECT *
+            FROM symptoms
+            WHERE id = ?
+        ''' 
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
