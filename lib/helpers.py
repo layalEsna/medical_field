@@ -152,5 +152,26 @@ def delete_disease_by_id():
         print(f'Disease with ID {id_} not found.')
 
 
+def update_disease_by_id():
+    id_ = input("Enter disease's ID: ")
+    if id_:
+        disease = Disease.find_by_id(id_)
+        if disease:
+            name = input("Enter disease's name: ")
+            symptoms = input("Enter disease's symptoms (comma-separated): ")
+            symptom_list = symptoms.split(', ') if symptoms else disease.symptoms
+            try:
+                disease.name = name
+                disease.symptoms = symptom_list
+                disease.update()
+                print(f'Success: Disease with ID {id_} updated.')
+            except Exception as e:
+                print(f'Error: {e}')
+        else:
+            print(f'Disease with ID {id_} not found.')
+    else:
+        print('No ID provided.')
+
+
 
 
