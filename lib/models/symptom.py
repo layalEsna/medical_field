@@ -144,3 +144,56 @@ class Symptom:
         ''' 
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
+    
+    @classmethod
+    def find_by_description(cls, description):
+        from lib.cli import CURSOR, CONN 
+        '''Find and return a list of Symptom instances by description from the symptoms table.'''
+        symptoms = []
+        sql = '''
+            SELECT *
+            FROM symptoms
+            WHERE description = ?
+        '''
+        rows = CURSOR.execute(sql, (description,)).fetchall()
+        for row in rows:
+            symptom = cls.instance_from_db(row)
+            symptoms.append(symptom)
+        return symptoms if symptoms else None
+    
+    '''Find and return a list of Symptom instances by patient ID.'''
+      
+
+    @classmethod
+    def find_by_patient_id(cls, patient_id):
+        from lib.cli import CURSOR, CONN 
+        '''Find and return a list of Symptom instances by patient ID.'''
+        patient_symptoms = []
+        sql = '''
+            SELECT *
+            FROM symptoms
+            WHERE patient_id = ?
+        '''
+        rows = CURSOR.execute(sql, (patient_id,)).fetchall()
+        for row in rows:
+            symptom = cls.instance_from_db(row)
+            patient_symptoms.append(symptom)
+        return patient_symptoms if patient_symptoms else None
+    
+  
+    @classmethod 
+    def find_disease_symptoms(cls, disease_id):
+        from lib.cli import CURSOR, CONN 
+        '''Return a list of all symptoms for a disease.'''
+        disease_symptom_list = []
+        sql = '''
+            SELECT *
+            FROM symptoms
+            WHERE disease_id = ?
+        '''
+        rows = CURSOR.execute(sql, (disease_id,)).fetchall()
+        for row in rows:
+            symptoms = cls.instance_from_db(row)
+            disease_symptom_list.append(symptoms)
+        return disease_symptom_list if disease_symptom_list else []
+
