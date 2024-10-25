@@ -96,3 +96,35 @@ def update_patient_by_last_name():
         print('No last name provided.')
 
 
+def delete_patient_by_id():
+    id_ = input("Enter patient's ID: ")
+    if id_:
+        patient = Patient.find_by_id(id_)
+        if patient:
+            confirm = input(f'Are you sure you want to delete patient {patient.name} {patient.last_name} with ID {patient.id}? (yes/no): ')
+            if confirm.lower() == 'yes':
+               
+                try:
+                    patient.delete()
+                    print(f'Success: Patient with ID {id_} has been deleted.')
+                except Exception as e:
+                    print(f'Error: {e}')
+            else:
+                print('Deletion canceled.')
+        else:
+            print(f'Patient with ID {id_} not found.')
+    else:
+        print('No ID provided.')
+
+
+
+def find_disease_by_name():
+    name = input("Enter disease's name: ")
+    disease = Disease.find_by_name(name)
+    if disease:
+        print(f'Found disease: {disease}')
+    else:
+        print(f'{name} not found.')
+        
+
+
