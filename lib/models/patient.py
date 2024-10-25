@@ -161,6 +161,20 @@ class Patient:
         '''
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
+    
+
+    @classmethod
+    def find_by_last_name(cls, last_name):
+        from lib.cli import CURSOR, CONN 
+        '''Find and return a Patient instance by last name from the patients table.'''
+        sql = '''
+            SELECT *
+            FROM patients
+            WHERE last_name = ?
+        '''
+        row = CURSOR.execute(sql, (last_name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+
 
 
 
