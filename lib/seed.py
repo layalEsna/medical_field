@@ -18,3 +18,9 @@ def seed_database():
     patient_3 = Patient.create("Emily", "Johnson", 28)
 
 
+    disease_1 = Disease.create("Flu", ["Cough", "Fever", "Fatigue"])
+    disease_2 = Disease.create("Diabetes", ["Increased thirst", "Frequent urination", "Hunger"])
+    disease_3 = Disease.create("COVID-19", ["Fever", "Cough", "Loss of smell"])
+
+
+
