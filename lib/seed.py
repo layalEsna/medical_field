@@ -30,5 +30,13 @@ def seed_database():
     Symptom.create("Loss of smell", patient_id=patient_1.id, disease_id=disease_1.id)
 
 
+if __name__ == "__main__":
+    seed_database()
+    print("Seeded database")
+ 
+
+
+
+
 
 
