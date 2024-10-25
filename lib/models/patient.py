@@ -177,6 +177,21 @@ class Patient:
 
 
 
+    def get_patient_symptoms(self):
+        from lib.cli import CURSOR, CONN 
+        '''Retrieve a list of all symptoms associated with this patient.'''
+        symptoms_list = []
+        sql = '''
+            SELECT *
+            FROM symptoms
+            WHERE patient_id = ?
+        '''
+        from lib.models.symptom import Symptom  # Moved import statement inside the function
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        for row in rows:
+            symptom = Symptom.instance_from_db(row)
+            symptoms_list.append(symptom)
+        return symptoms_list if symptoms_list else []
 
 
 
