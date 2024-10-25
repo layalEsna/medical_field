@@ -125,6 +125,32 @@ def find_disease_by_name():
         print(f'Found disease: {disease}')
     else:
         print(f'{name} not found.')
-        
+
+def find_disease_by_id():
+    id_ = input("Enter disease's ID: ")
+    disease = Disease.find_by_id(id_)
+    if disease:
+        print(f'Disease by ID {id_} found: {disease}')
+    else:
+        print(f'Disease by ID {id_} not found.')
+
+
+def delete_disease_by_id():
+    id_ = input("Enter disease's ID: ")
+    disease = Disease.find_by_id(id_)
+    if disease:
+        confirm = input(f'Are you sure you want to delete disease {disease.name} with ID {disease.id}? (yes/no): ')
+        if confirm.lower() == 'yes':
+            try:
+                disease.delete()
+                print(f'Success: Disease {disease.name} with ID {id_} deleted.')
+            except Exception as e:
+                print(f'Error: {e}')
+        else:
+            print('Deletion canceled.')
+    else:
+        print(f'Disease with ID {id_} not found.')
+
+
 
 
