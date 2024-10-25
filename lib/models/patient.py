@@ -149,6 +149,19 @@ class Patient:
             patient = cls.instance_from_db(row)
             patients.append(patient)
         return patients
+    
+    @classmethod
+    def find_by_id(cls, id):
+        from lib.cli import CURSOR, CONN 
+        '''Find and return a Patient instance by ID from the patients table.'''
+        sql = '''
+            SELECT *
+            FROM patients
+            WHERE id = ?
+        '''
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+
 
 
 
