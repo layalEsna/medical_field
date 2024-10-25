@@ -1,0 +1,1 @@
+# lib/models/disease.py
