@@ -71,3 +71,35 @@ class Symptom:
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
 
+    
+    @classmethod
+    def create(cls, description, patient_id, disease_id):
+        from lib.cli import CURSOR, CONN 
+        '''Create and save a new Symptom instance.'''
+        symptom = cls(description, patient_id, disease_id)
+        symptom.save()
+        return symptom
+    
+    def update(self):
+        from lib.cli import CURSOR, CONN 
+        '''Update an existing Symptom record in the database.'''
+        sql = '''
+            UPDATE symptoms
+            SET description = ?, patient_id = ?, disease_id = ?
+            WHERE id = ?
+        '''
+        CURSOR.execute(sql, (self.description, self.patient_id, self.disease_id, self.id))
+        CONN.commit()
+
+    def delete(self):
+        from lib.cli import CURSOR, CONN 
+        '''Delete the Symptom record from the database.'''
+        sql = '''
+            DELETE FROM symptoms
+            WHERE id = ?
+        '''
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        del type(self).all[self.id]
+        self.id = None
