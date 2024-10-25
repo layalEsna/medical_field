@@ -94,6 +94,18 @@ class Patient:
         patient = cls(name, last_name, age)
         patient.save()
         return patient
+    
+
+    def update(self):
+        from lib.cli import CURSOR, CONN 
+        '''Update an existing Patient record in the database.'''
+        sql = '''
+            UPDATE patients
+            SET name = ?, last_name = ?, age = ?
+            WHERE id = ?
+        '''
+        CURSOR.execute(sql, (self.name, self.last_name, self.age, self.id))
+        CONN.commit()
 
 
 
