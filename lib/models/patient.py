@@ -107,6 +107,20 @@ class Patient:
         CURSOR.execute(sql, (self.name, self.last_name, self.age, self.id))
         CONN.commit()
 
+    
+    def delete(self):
+        from lib.cli import CURSOR, CONN 
+        '''Delete the Patient record from the database.'''
+        sql = '''
+            DELETE FROM patients
+            WHERE id = ?
+        '''
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+
+        del type(self).all[self.id] 
+        self.id = None
+
 
 
 
