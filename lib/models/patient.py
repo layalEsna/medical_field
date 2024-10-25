@@ -36,5 +36,18 @@ class Patient:
             self._last_name = last_name
         else:
             raise ValueError('Lastname must be a non-empty string.')
+        
+    @property
+    def age(self):
+        return self._age
+
+    @age.setter
+    def age(self, age):
+       
+        if isinstance(age, int) and 18 <= age <= 100:
+            self._age = age
+        else:
+            raise ValueError('Age must be an integer between 18 and 100 inclusive.')
+
 
 
