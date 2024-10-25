@@ -121,6 +121,20 @@ class Patient:
         del type(self).all[self.id] 
         self.id = None
 
+    @classmethod
+    def instance_from_db(cls, row):
+        '''Return a Patient instance based on a database row.'''
+        patient = cls.all.get(row[0])
+        if patient:
+            patient.name = row[1]
+            patient.last_name = row[2]
+            patient.age = row[3]
+        else:
+            patient = cls(row[1], row[2], row[3])
+            patient.id = row[0]
+            cls.all[patient.id] = patient
+        return patient
+
 
 
 
