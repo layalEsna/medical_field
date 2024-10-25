@@ -34,3 +34,27 @@ class Disease:
             self._symptoms = symptoms
         else:
             raise ValueError('Symptoms must be a non-empty list.')
+    
+    @classmethod
+    def create_table(cls):
+        from lib.cli import CONN, CURSOR  
+        sql = '''
+            CREATE TABLE IF NOT EXISTS diseases(
+            id INTEGER PRIMARY KEY, 
+            name TEXT, 
+            symptoms TEXT
+            )
+        '''
+        CURSOR.execute(sql)
+        CONN.commit()
+
+  
+    @classmethod
+    def drop_table(cls):
+        from lib.cli import CONN, CURSOR  
+        '''Drop the diseases table from the database.'''
+        sql = '''
+            DROP TABLE IF EXISTS diseases
+        '''
+        CURSOR.execute(sql)
+        CONN.commit()
