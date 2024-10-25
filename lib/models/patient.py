@@ -76,6 +76,19 @@ class Patient:
         CURSOR.execute(sql)
         CONN.commit()
 
+    def save(self):
+        from lib.cli import CURSOR, CONN 
+        '''Insert the Patient instance into the database and save the ID.'''
+        sql = '''
+            INSERT INTO patients(name, last_name, age)
+            VALUES(?,?,?)
+        '''
+        CURSOR.execute(sql, (self.name, self.last_name, self.age))
+        CONN.commit()
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
+
+
 
 
 
