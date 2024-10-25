@@ -58,3 +58,24 @@ class Disease:
         '''
         CURSOR.execute(sql)
         CONN.commit()
+
+    def save(self):
+        '''Insert the Disease instance into the database and save the ID.'''
+        from lib.cli import CONN, CURSOR 
+        sql = '''
+            INSERT INTO diseases(name, symptoms)
+            VALUES(?,?)
+        '''
+        symptoms_str = ', '.join(self.symptoms)
+        CURSOR.execute(sql, (self.name, symptoms_str))
+        CONN.commit()
+        self.id = CURSOR.lastrowid
+        type(self).all[self.id] = self
+
+    
+    @classmethod
+    def create(cls, name, symptoms=None):
+        '''Create and save a new Disease instance.'''
+        disease = cls(name, symptoms)
+        disease.save()
+        return disease
