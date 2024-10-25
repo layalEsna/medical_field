@@ -160,7 +160,8 @@ class Disease:
         '''
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
-    
+     
+
     def get_disease_symptoms(self):
         from lib.models.symptom import Symptom  # Moved import here
         from lib.cli import CURSOR  # Moved import here
@@ -176,19 +177,7 @@ class Disease:
             disease_symptoms.append(symptoms)
         return disease_symptoms if disease_symptoms else []
     
-    @classmethod
-    def disease_symptoms(cls, disease_id):
-        from lib.models.symptom import Symptom 
-        from lib.cli import CURSOR  
-        symptom_list = []
-        sql = '''
-            SELECT * 
-            FROM symptoms
-            WHERE disease_id = ?
-        '''
-        rows = CURSOR.execute(sql, (disease_id,)).fetchall()
-        for row in rows:
-            symptoms = Symptom.instance_from_db(row)
-            symptom_list.append(symptoms)
-        return symptom_list if symptom_list else []
+    
+
+    
     
