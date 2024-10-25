@@ -134,6 +134,22 @@ class Patient:
             patient.id = row[0]
             cls.all[patient.id] = patient
         return patient
+    
+    @classmethod
+    def get_all(cls):
+        from lib.cli import CURSOR, CONN 
+        '''Return a list of all Patient instances from the database.'''
+        patients = []
+        sql = '''
+            SELECT *
+            FROM patients
+        '''
+        rows = CURSOR.execute(sql).fetchall()
+        for row in rows:
+            patient = cls.instance_from_db(row)
+            patients.append(patient)
+        return patients
+
 
 
 
