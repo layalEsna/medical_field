@@ -104,3 +104,49 @@ class Disease:
         CONN.commit()
         del type(self).all[self.id]
         self.id = None
+
+    
+    @classmethod
+    def instance_from_db(cls, row):
+        '''Return a Disease instance based on a database row.'''
+        disease_id = row[0]
+        disease = cls.all.get(disease_id)
+        symptom_list = row[2].split(', ') if row[2] else []
+        if disease:
+            disease.name = row[1]
+            disease.symptoms = symptom_list
+        else:
+            disease = cls(row[1], symptom_list)
+            disease.id = disease_id
+            cls.all[disease.id] = disease
+        return disease
+    
+    @classmethod
+    def get_all(cls):
+        '''Return a list of all Disease instances from the database.'''
+        from lib.cli import CURSOR  
+        diseases = []
+        sql = '''
+            SELECT *
+            FROM diseases
+        '''
+        rows = CURSOR.execute(sql).fetchall()
+        for row in rows:
+            disease = cls.instance_from_db(row)
+            diseases.append(disease)
+        return diseases
+    
+
+    @classmethod
+    def find_by_id(cls, id):
+        '''Find and return a Disease instance by ID from the diseases table.'''
+        from lib.cli import CURSOR  
+        sql = '''
+            SELECT *
+            FROM diseases
+            WHERE id = ?
+        '''
+        row = CURSOR.execute(sql, (id,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+    
