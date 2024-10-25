@@ -51,19 +51,31 @@ class Patient:
             raise ValueError('Age must be an integer between 18 and 100 inclusive.')
         
         
-    # @classmethod
-    # def create_table(cls):
-    #     from lib.cli import CURSOR, CONN 
-    #     sql = '''
-    #       CREATE TABLE IF NOT EXISTS patients(
-    #         id INTEGER PRIMARY KEY,
-    #         name TEXT,
-    #         last_name TEXT,
-    #         age INTEGER
-    #         )
-    #     '''
-    #     CURSOR.execute(sql)
-    #     CONN.commit()
+    @classmethod
+    def create_table(cls):
+        from lib.cli import CURSOR, CONN 
+        sql = '''
+          CREATE TABLE IF NOT EXISTS patients(
+            id INTEGER PRIMARY KEY,
+            name TEXT,
+            last_name TEXT,
+            age INTEGER
+            )
+        '''
+        CURSOR.execute(sql)
+        CONN.commit()
+
+    
+    @classmethod
+    def drop_table(cls):
+        from lib.cli import CONN, CURSOR  
+        '''Drop the diseases table from the database.'''
+        sql = '''
+            DROP TABLE IF EXISTS diseases
+        '''
+        CURSOR.execute(sql)
+        CONN.commit()
+
 
 
 
