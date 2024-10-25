@@ -88,6 +88,13 @@ class Patient:
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
 
+    @classmethod
+    def create(cls, name, last_name, age):
+        '''Create and save a new Patient instance.'''
+        patient = cls(name, last_name, age)
+        patient.save()
+        return patient
+
 
 
 
