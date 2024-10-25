@@ -92,3 +92,15 @@ class Disease:
         '''
         CURSOR.execute(sql, (self.name, symptoms_str, self.id))
         CONN.commit()
+
+    def delete(self):
+        '''Delete the Disease record from the database.'''
+        from lib.cli import CONN, CURSOR  
+        sql = '''
+            DELETE FROM diseases
+            WHERE id = ?
+        '''
+        CURSOR.execute(sql, (self.id,))
+        CONN.commit()
+        del type(self).all[self.id]
+        self.id = None
