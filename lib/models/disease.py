@@ -149,4 +149,46 @@ class Disease:
         row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
     
+    @classmethod
+    def find_by_name(cls, name):
+        '''Find and return a Disease instance by name from the diseases table.'''
+        from lib.cli import CURSOR  
+        sql = '''
+            SELECT *
+            FROM diseases
+            WHERE name = ?
+        '''
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return cls.instance_from_db(row) if row else None
+    
+    def get_disease_symptoms(self):
+        from lib.models.symptom import Symptom  # Moved import here
+        from lib.cli import CURSOR  # Moved import here
+        disease_symptoms = []
+        sql = '''
+            SELECT *
+            FROM symptoms 
+            WHERE disease_id = ?
+        '''
+        rows = CURSOR.execute(sql, (self.id,)).fetchall()
+        for row in rows:
+            symptoms = Symptom.instance_from_db(row)
+            disease_symptoms.append(symptoms)
+        return disease_symptoms if disease_symptoms else []
+    
+    @classmethod
+    def disease_symptoms(cls, disease_id):
+        from lib.models.symptom import Symptom 
+        from lib.cli import CURSOR  
+        symptom_list = []
+        sql = '''
+            SELECT * 
+            FROM symptoms
+            WHERE disease_id = ?
+        '''
+        rows = CURSOR.execute(sql, (disease_id,)).fetchall()
+        for row in rows:
+            symptoms = Symptom.instance_from_db(row)
+            symptom_list.append(symptoms)
+        return symptom_list if symptom_list else []
     
