@@ -22,5 +22,13 @@ def seed_database():
     disease_2 = Disease.create("Diabetes", ["Increased thirst", "Frequent urination", "Hunger"])
     disease_3 = Disease.create("COVID-19", ["Fever", "Cough", "Loss of smell"])
 
+    Symptom.create("Fever", patient_id=patient_1.id, disease_id=disease_2.id)
+    Symptom.create("Cough", patient_id=patient_2.id, disease_id=disease_3.id)
+    Symptom.create("Fatigue", patient_id=patient_3.id, disease_id=disease_3.id)
+    Symptom.create("Increased thirst", patient_id=patient_2.id, disease_id=disease_2.id)
+    Symptom.create("Frequent urination", patient_id=patient_3.id, disease_id=disease_1.id)
+    Symptom.create("Loss of smell", patient_id=patient_1.id, disease_id=disease_1.id)
+
+
 
 
