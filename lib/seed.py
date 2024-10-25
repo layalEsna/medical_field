@@ -13,3 +13,8 @@ def seed_database():
     Disease.create_table()
     Symptom.create_table()
 
+    patient_1 = Patient.create("John", "Doe", 45)
+    patient_2 = Patient.create("Jane", "Smith", 32)
+    patient_3 = Patient.create("Emily", "Johnson", 28)
+
+
