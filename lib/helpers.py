@@ -3,7 +3,7 @@
 from lib.models.patient import Patient
 from lib.models.disease import Disease
 from lib.models.symptom import Symptom
-from lib.utils import exit_program  
+# from lib.utils import exit_program  
 from lib.seed import seed_database
 
 def helper_1():
@@ -173,5 +173,22 @@ def update_disease_by_id():
         print('No ID provided.')
 
 
+def add_new_disease():
+    name = input("Enter disease's name: ")
+    symptoms = input("Enter disease's symptoms (comma-seprated): ")
+    symptom_list = symptoms.split(', ')
+    
+    try:
+            new_disease = Disease.create(name, symptom_list)
+            if new_disease:
+                print(f'Success<Disease {new_disease.name} added.>')
+            else:
+                print(f'Failed to add {name}')
+   
+    except Exception as e:
+             print(f'Error: {e}')
+
+
+            #  PYTHONPATH=. python lib/cli.py
 
 

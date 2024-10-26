@@ -1,11 +1,13 @@
 
 # lib/cli.py
-import sqlite3
-# from lib.db import CONN, CURSOR
+import sqlite3 
+from lib.db import CONN, CURSOR
 from lib.models.patient import Patient
 from lib.models.disease import Disease
 from lib.models.symptom import Symptom
-# from lib.seed import seed_database
+from lib.seed import seed_database
+from lib.utils import exit_program
+
 
 from lib.helpers import (
     exit_program,
@@ -26,8 +28,6 @@ from lib.helpers import (
     
 )
  
-# CONN = sqlite3.connect('medical_records.db')
-# CURSOR = CONN.cursor()
 
 def main():
     try:
@@ -37,8 +37,21 @@ def main():
             if choice == "0":
                 exit_program()
             elif choice == "1":
-                seed_database()
+                # Start seeding the database
+                try:
+                    print("Seeding the database...", flush=True)
+                    seed_database()
+                    print('Database seeded successfully', flush=True)
+                except Exception as e:
+                    print(f"An error occurred: {e}")
+
+
+                
+                #   seed_database()
+                #   print('Database seeded successfully', flush=True)
+                   
             elif choice == "2":
+
                 list_patients()
             elif choice == "3":
                 list_diseases()

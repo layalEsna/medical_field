@@ -10,8 +10,8 @@ class Patient:
         self.last_name = last_name
         
         self.age = age
-        def __repr__(self):
-            return f'<Patient {self.id}: {self.name}, {self.last_name}, {self.age}>'
+    def __repr__(self):
+        return f'<Patient {self.id}: {self.name}, {self.last_name}, {self.age}>'
         
 
         # Property for name with validation
