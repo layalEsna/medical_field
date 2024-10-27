@@ -41,6 +41,7 @@ def list_symptoms():
 
 
 def add_new_patient():
+    print("add_new_patient called", flush=True)
     try:
         name = input("Enter the patient's name: ")
         last_name = input("Enter the patient's last name: ")

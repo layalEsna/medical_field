@@ -61,7 +61,7 @@ class Patient:
             last_name TEXT,
             age INTEGER
             )
-        '''
+    '''
         CURSOR.execute(sql)
         CONN.commit()
 
@@ -71,7 +71,7 @@ class Patient:
         from lib.cli import CONN, CURSOR  
         '''Drop the diseases table from the database.'''
         sql = '''
-            DROP TABLE IF EXISTS diseases
+            DROP TABLE IF EXISTS patients
         '''
         CURSOR.execute(sql)
         CONN.commit()
