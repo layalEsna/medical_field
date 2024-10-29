@@ -2,8 +2,8 @@
 
 from lib.models.patient import Patient
 from lib.models.disease import Disease
-from lib.models.symptom import Symptom
-# from lib.utils import exit_program  
+from lib.models.symptom import SymptomEntry
+ 
 from lib.seed import seed_database
 
 def helper_1():
@@ -32,7 +32,7 @@ def list_diseases():
 
 def list_symptoms():
     '''List all symptoms.'''
-    symptoms = Symptom.get_all()
+    symptoms = SymptomEntry.get_all()
     if symptoms:
         for symptom in symptoms:
             print(symptom)
@@ -40,22 +40,33 @@ def list_symptoms():
         print('No symptoms found.')
 
 
+# def add_new_patient():
+#     # print("add_new_patient called", flush=True)
+#     try:
+#         name = input("Enter the patient's name: ")
+#         last_name = input("Enter the patient's last name: ")
+        
+#         age_input = input("Enter the patient's age: ")
+#         age = int(age_input)  
+#         new_patient = Patient.create(name, last_name, age)
+#         # new_patient.save()
+#         print(f'Success: {new_patient} has been added.')
+#     except Exception as e:
+#         print(f'Error: {e}')
+
+
 def add_new_patient():
-    print("add_new_patient called", flush=True)
     try:
         name = input("Enter the patient's name: ")
         last_name = input("Enter the patient's last name: ")
         
-        age_input = input(f"Enter the patient's age: ")
-        age = int(age_input)  # Ensure this is being converted to an integer properly
-        
-        new_patient = Patient.create(name, last_name, age)
-        
-        print(f'Success: {new_patient} has been added.')
+        age_input = input("Enter the patient's age: ")
+        age = int(age_input)  
+        new_patient = Patient.create(name, last_name, age)  # Create new patient
+        print(f'<<<Success: {new_patient} has been added.>>>')  # Will call __repr__ of Patient
     except Exception as e:
         print(f'Error: {e}')
-
-                
+               
 def update_patient_by_id():
     id_ = input("Enter patient's ID: ")
     if id_:
@@ -69,7 +80,7 @@ def update_patient_by_id():
                 patient.last_name = last_name
                 patient.age = int(age)
                 patient.update()
-                print(f'Success: {patient.name} {patient.last_name} with ID: {patient.id}, Age: {patient.age}')
+                print(f'<<<Success: {patient.name} {patient.last_name} with ID: {patient.id}, Age: {patient.age} updated.>>>')
             except Exception as e:
                 print(f'Error: {e}')
         else:
@@ -90,7 +101,7 @@ def update_patient_by_last_name():
             patient.last_name = last_name
             patient.age = int(age)
             patient.update()
-            print(f'Success: {patient.name} {patient.last_name} with ID: {patient.id}, Age: {patient.age} updated.')
+            print(f'<<<<Success: {patient.name} {patient.last_name} with ID: {patient.id}, Age: {patient.age} updated.>>>>')
         except Exception as e:
             print(f'Error: {e}')
     else:
@@ -107,7 +118,7 @@ def delete_patient_by_id():
                
                 try:
                     patient.delete()
-                    print(f'Success: Patient with ID {id_} has been deleted.')
+                    print(f'<<<<Success: Patient with ID {id_} has been deleted.>>>>')
                 except Exception as e:
                     print(f'Error: {e}')
             else:
@@ -165,7 +176,7 @@ def update_disease_by_id():
                 disease.name = name
                 disease.symptoms = symptom_list
                 disease.update()
-                print(f'Success: Disease with ID {id_} updated.')
+                print(f'<<<<Success: Disease with ID {id_} updated.>>>>')
             except Exception as e:
                 print(f'Error: {e}')
         else:
@@ -190,6 +201,25 @@ def add_new_disease():
              print(f'Error: {e}')
 
 
-            #  PYTHONPATH=. python lib/cli.py
+            #  PYTHONPATH=. python lib/cli.py 
+            # or  python -m lib.cli
+
+
+
+    #     #    
+    #         #  python -m lib.seed
+
+             
+    #         #  sqlite3 lib/db.sqlite
+             
+    #         #  sqlite3 lib/medical_records.db
+    #         #  .tables
+    #         #  .schema tablename
+    #         #  .schema patients
+    #         #  SELECT * FROM patients;
+    #         #  SELECT * FROM diseases;
+    #         # SELECT * FROM symptoms;
+             
+
 
 

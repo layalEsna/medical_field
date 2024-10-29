@@ -163,7 +163,7 @@ class Disease:
     
 
     def get_disease_symptoms(self):
-        from lib.models.symptom import Symptom  # Moved import here
+        from lib.models.symptom import SymptomEntry  # Moved import here
         from lib.cli import CURSOR  # Moved import here
         disease_symptoms = []
         sql = '''
@@ -173,7 +173,7 @@ class Disease:
         '''
         rows = CURSOR.execute(sql, (self.id,)).fetchall()
         for row in rows:
-            symptoms = Symptom.instance_from_db(row)
+            symptoms = SymptomEntry.instance_from_db(row)
             disease_symptoms.append(symptoms)
         return disease_symptoms if disease_symptoms else []
     

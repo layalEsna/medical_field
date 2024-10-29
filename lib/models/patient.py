@@ -11,7 +11,7 @@ class Patient:
         
         self.age = age
     def __repr__(self):
-        return f'<Patient {self.id}: {self.name}, {self.last_name}, {self.age}>'
+        return f'Patient {self.id}: {self.name} {self.last_name},age: {self.age}'
         
 
         # Property for name with validation
@@ -76,22 +76,39 @@ class Patient:
         CURSOR.execute(sql)
         CONN.commit()
 
+    # def save(self):
+    #     from lib.cli import CURSOR, CONN 
+    #     '''Insert the Patient instance into the database and save the ID.'''
+    #     sql = '''
+    #         INSERT INTO patients(name, last_name, age)
+    #         VALUES(?,?,?)
+    #     '''
+    #     CURSOR.execute(sql, (self.name, self.last_name, self.age))
+    #     CONN.commit()
+    #     self.id = CURSOR.lastrowid
+    #     type(self).all[self.id] = self
+
     def save(self):
         from lib.cli import CURSOR, CONN 
         '''Insert the Patient instance into the database and save the ID.'''
         sql = '''
-            INSERT INTO patients(name, last_name, age)
-            VALUES(?,?,?)
+        INSERT INTO patients(name, last_name, age)
+        VALUES(?,?,?)
         '''
-        CURSOR.execute(sql, (self.name, self.last_name, self.age))
-        CONN.commit()
-        self.id = CURSOR.lastrowid
-        type(self).all[self.id] = self
+        try:
+          CURSOR.execute(sql, (self.name, self.last_name, self.age))
+          CONN.commit()
+          self.id = CURSOR.lastrowid  # Set the ID of the instance
+          type(self).all[self.id] = self  # Store instance in the class-level dictionary
+        except Exception as e:
+          print(f"Error saving patient: {e}")
+
 
     @classmethod
     def create(cls, name, last_name, age):
         '''Create and save a new Patient instance.'''
-        patient = cls(name, last_name, age)
+        # patient = cls(name, last_name, age)
+        patient = cls(name=name, last_name=last_name, age=age)
         patient.save()
         return patient
     

@@ -1,16 +1,17 @@
 
 # lib/cli.py
 import sqlite3 
+
 from lib.db import CONN, CURSOR
 from lib.models.patient import Patient
 from lib.models.disease import Disease
-from lib.models.symptom import Symptom
+from lib.models.symptom import SymptomEntry
 from lib.seed import seed_database
 from lib.utils import exit_program
 
 
 from lib.helpers import (
-    # exit_program,
+   
    
     # helper_1,
     list_patients,
@@ -27,17 +28,27 @@ from lib.helpers import (
     add_new_disease,
     
 )
- 
+# import os
+
+# def exit_program():
+#     """Closes the database connection and exits the program."""
+#     try:
+#         CONN.close()
+#         print("Connection closed. Exiting program.")
+#     except Exception as e:
+#         print(f"Error while closing the connection: {e}")
+#     finally:
+#         os._exit(0)  # Forceful exit
 
 def main():
     try:
         while True:
-            menu()
-            choice = input("> ")
+            menu()  # Call the menu first to display options
+            choice = input("> ")  # Then get user input
+
             if choice == "0":
-                exit_program()
+                exit_program()  # Exit if user chooses 0
             elif choice == "1":
-               
                 try:
                     print("Seeding the database...", flush=True)
                     seed_database()
@@ -72,8 +83,12 @@ def main():
             else:
                 print("Invalid choice")
     finally:
+      try:
         CURSOR.close()
         CONN.close()
+      except Exception as e:
+            print(f"Error closing resources: {e}")
+
 
 
 def menu():

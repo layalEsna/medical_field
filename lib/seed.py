@@ -3,7 +3,7 @@
 # from lib.db import CONN, CURSOR  
 from lib.models.patient import Patient
 from lib.models.disease import Disease
-from lib.models.symptom import Symptom
+from lib.models.symptom import SymptomEntry
 
 def seed_database():
     # from lib.cli import CONN
@@ -13,12 +13,12 @@ def seed_database():
         # Drop existing tables
         Patient.drop_table()
         Disease.drop_table()
-        Symptom.drop_table()
+        SymptomEntry.drop_table()
         
         # Create tables
         Patient.create_table()
         Disease.create_table()
-        Symptom.create_table()
+        SymptomEntry.create_table()
 
         # Create patients
         patient_1 = Patient.create("John", "Doe", 45)
@@ -31,12 +31,12 @@ def seed_database():
         disease_3 = Disease.create("COVID-19", ["Fever", "Cough", "Loss of smell"])
 
         # Create symptoms linked to patients and diseases
-        Symptom.create("Fever", patient_id=patient_1.id, disease_id=disease_2.id)
-        Symptom.create("Cough", patient_id=patient_2.id, disease_id=disease_3.id)
-        Symptom.create("Fatigue", patient_id=patient_3.id, disease_id=disease_3.id)
-        Symptom.create("Increased thirst", patient_id=patient_2.id, disease_id=disease_2.id)
-        Symptom.create("Frequent urination", patient_id=patient_3.id, disease_id=disease_1.id)
-        Symptom.create("Loss of smell", patient_id=patient_1.id, disease_id=disease_1.id)
+        SymptomEntry.create("Fever", patient_id=patient_1.id, disease_id=disease_2.id)
+        SymptomEntry.create("Cough", patient_id=patient_2.id, disease_id=disease_3.id)
+        SymptomEntry.create("Fatigue", patient_id=patient_3.id, disease_id=disease_3.id)
+        SymptomEntry.create("Increased thirst", patient_id=patient_2.id, disease_id=disease_2.id)
+        SymptomEntry.create("Frequent urination", patient_id=patient_3.id, disease_id=disease_1.id)
+        SymptomEntry.create("Loss of smell", patient_id=patient_1.id, disease_id=disease_1.id)
 
 if __name__ == "__main__":
     seed_database()

@@ -1,5 +1,6 @@
 # lib/models/symptom.py
-class Symptom:
+
+class SymptomEntry:
     all = {}
 
     def __init__(self, description, patient_id = None, disease_id = None, id=None):
@@ -9,10 +10,13 @@ class Symptom:
         self.disease_id = disease_id
 
     def __repr__(self):
+        
+       
         return (
             f'<Symptom {self.id}: {self.description}, ' +
             f'Patient ID: {self.patient_id}, Disease ID: {self.disease_id}>'
         )
+    # python -m lib.cli
 
     @property
     def description(self):
